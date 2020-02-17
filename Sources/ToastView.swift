@@ -48,7 +48,7 @@ open class ToastView: UIView {
   @objc open dynamic var bottomOffsetPortrait: CGFloat = {
     switch UIDevice.current.userInterfaceIdiom {
     // specific values
-    case .phone: return 30
+    case .phone: return 59
     case .pad: return 60
     case .tv: return 90
     case .carPlay: return 30
@@ -138,7 +138,7 @@ open class ToastView: UIView {
       }
     }()
     self.numberOfLines = 0
-    self.textAlignment = .center
+    self.textAlignment = .left
     return self
   }()
 
@@ -163,7 +163,7 @@ open class ToastView: UIView {
     super.layoutSubviews()
     let containerSize = ToastWindow.shared.frame.size
     let constraintSize = CGSize(
-      width: containerSize.width * maxWidthRatio - self.textInsets.left - self.textInsets.right,
+      width: containerSize.width - 20 - self.textInsets.left - self.textInsets.right,
       height: CGFloat.greatestFiniteMagnitude
     )
     let textLabelSize = self.textLabel.sizeThatFits(constraintSize)
@@ -176,11 +176,10 @@ open class ToastView: UIView {
     self.backgroundView.frame = CGRect(
       x: 0,
       y: 0,
-      width: self.textLabel.frame.size.width + self.textInsets.left + self.textInsets.right,
+      width: containerSize.width - 20,
       height: self.textLabel.frame.size.height + self.textInsets.top + self.textInsets.bottom
     )
 
-    var x: CGFloat
     var y: CGFloat
     var width: CGFloat
     var height: CGFloat
@@ -200,10 +199,9 @@ open class ToastView: UIView {
     }
 
     let backgroundViewSize = self.backgroundView.frame.size
-    x = (width - backgroundViewSize.width) * 0.5
     y = height - (backgroundViewSize.height + y)
     self.frame = CGRect(
-      x: x,
+      x: 10,
       y: y,
       width: backgroundViewSize.width,
       height: backgroundViewSize.height
